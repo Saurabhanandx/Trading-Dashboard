@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Dashboard</title>
+    <!-- Linking to the external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Trading Dashboard</h1>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Client Accounts</h3>
+            <input type="checkbox" id="select-all" onclick="toggleSelectAll()"> Select All<br>
+            <div class="filter-broker">
+                <label for="broker-filter-sidebar">Broker:</label>
+                <select id="broker-filter-sidebar" onchange="filterClients()">
+                    <option value="all">All</option>
+                    <option value="Zerodha">Zerodha</option>
+                    <option value="XTS">XTS</option>
+                </select>
+            </div>
+            <div id="client-accounts">
+                <input type="checkbox" class="client-id" data-broker="Zerodha"> Client 1 (Zerodha)<br>
+                <input type="checkbox" class="client-id" data-broker="XTS"> Client 2 (XTS)<br>
+                <input type="checkbox" class="client-id" data-broker="Zerodha"> Client 3 (Zerodha)<br>
+                <input type="checkbox" class="client-id" data-broker="XTS"> Client 4 (XTS)<br>
+            </div>
+            <button class="square-off-btn">Square Off</button>
+        </div>
+        <div class="content">
+            <div class="tabs">
+                <button class="tab active" onclick="showTabContent('dashboard')">Dashboard</button>
+                <button class="tab" onclick="showTabContent('orders')">Orders</button>
+                <button class="tab" onclick="showTabContent('positions')">Positions</button>
+            </div>
+            <div id="dashboard" class="tab-content active">
+                <h3>Dashboard</h3>
+                <div class="balance">
+                    <span>Equity</span><br>
+                    Available Balance: <span class="positive">10.36L</span><br>
+                    Margin Used: <span class="negative">-274.35</span><br>
+                    Account Value: <span class="positive">10.35L</span>
+                </div>
+            </div>
+            <div id="orders" class="tab-content">
+                <h3>Executed Orders</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Broker</th>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Instrument</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Avg Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Client 1</td>
+                            <td>Zerodha</td>
+                            <td>12:52:46</td>
+                            <td class="buy">BUY</td>
+                            <td>HINDUNILVR</td>
+                            <td>MIS</td>
+                            <td>10 / 10</td>
+                            <td>2647.75</td>
+                            <td class="complete">COMPLETE</td>
+                        </tr>
+                        <tr>
+                            <td>Client 2</td>
+                            <td>XTS</td>
+                            <td>12:04:53</td>
+                            <td class="sell">SELL</td>
+                            <td>HINDUNILVR</td>
+                            <td>MIS</td>
+                            <td>10 / 10</td>
+                            <td>2658.00</td>
+                            <td class="complete">COMPLETE</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="positions" class="tab-content">
+                <h3>Positions</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Instrument</th>
+                            <th>Qty</th>
+                            <th>Avg.</th>
+                            <th>LTP</th>
+                            <th>P&L</th>
+                            <th>Chg.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MIS</td>
+                            <td>HINDUNILVR</td>
+                            <td class="negative">-10</td>
+                            <td>2658.00</td>
+                            <td>2655.00</td>
+                            <td class="positive">+30.00</td>
+                            <td class="negative">-0.11%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="exit-btn">Exit 1 Position</button>
+            </div>
+        </div>
+    </div>
+    <!-- Linking to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
