@@ -5,51 +5,108 @@ body {
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.6;
+    transition: background-color 0.3s;
 }
 
 header {
-    background-color: #007bff;
+    background-color: #0056b3;
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-icon {
+    background-color: #ffffff;
+    color: #0056b3;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-dropdown {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 180px;
+    display: none;
+    padding: 15px;
+    z-index: 10;
+}
+
+.user-dropdown p {
+    margin: 5px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #e63946;
     color: white;
-    text-align: center;
-    padding: 15px 0;
-    font-size: 1.5em;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #d62828;
+    transform: translateY(-2px);
 }
 
 .container {
     display: flex;
-    padding: 20px;
-    gap: 20px;
+    padding: 30px;
+    gap: 25px;
 }
 
 .sidebar {
     width: 25%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.3s;
 }
 
 .sidebar:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .square-off-btn {
     width: 100%;
     padding: 12px;
-    background-color: #ff4b5c;
+    background-color: #e63946;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 25px;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 .square-off-btn:hover {
-    background-color: #e03a4e;
+    background-color: #d62828;
     transform: translateY(-2px);
 }
 
@@ -61,41 +118,32 @@ header {
     display: flex;
     border-bottom: 2px solid #ddd;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .tab {
     flex: 1;
-    padding: 12px;
+    padding: 15px;
     cursor: pointer;
     text-align: center;
-    font-weight: bold;
-    color: #666;
+    font-weight: 500;
+    color: #444;
     transition: color 0.3s, background-color 0.3s;
+    border-radius: 5px 5px 0 0;
 }
 
 .tab.active {
-    color: #007bff;
-    background-color: #f1f3f6;
-}
-
-.sliding-underline {
-    position: absolute;
-    bottom: -2px;
-    height: 3px;
-    background: #007bff;
-    width: 33.33%;
-    left: 0;
-    transition: left 0.3s;
+    color: #ffffff;
+    background-color: #007bff;
 }
 
 .tab-content {
     display: none;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease-in-out;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.4s ease-in-out;
 }
 
 .tab-content.active {
@@ -117,31 +165,119 @@ table {
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 th, td {
-    padding: 12px;
+    padding: 14px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
 
 th {
-    background-color: #f1f3f6;
-    font-weight: bold;
+    background-color: #f1f5f9;
+    color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .buy {
-    color: #007bff;
+    color: #1d4ed8;
     font-weight: bold;
 }
 
 .sell {
-    color: #ff4b5c;
+    color: #ef4444;
     font-weight: bold;
 }
 
 .complete {
-    color: #28a745;
+    color: #10b981;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Balance section */
+.balance {
+    background-color: #f0f4f8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.positive {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.negative {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* Filter dropdown */
+.filter-broker,
+.filter-positions {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    border-color: #007bff;
+}
+
+/* Exit button */
+.exit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.exit-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Client Account Checkbox */
+.client-account label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.client-account input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+/* Table for positions */
+#positions-table td.positive {
+    color: #10b981;
+    font-weight: bold;
+}
+
+#positions-table td.negative {
+    color: #ef4444;
     font-weight: bold;
 }
