@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="loginpage.css">
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form onsubmit="return validateLogin()">
+            <div class="input-container">
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-container password-container">
+                <input type="password" id="password" placeholder="Password" required>
+                <span class="eye-icon" onclick="togglePasswordVisibility()">👁️</span>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <p id="error-message" class="error-message">Invalid username or password. Please try again.</p>
+        </form>
+    </div>
+    <script src="loginpage.js"></script>
+</body>
+</html>
