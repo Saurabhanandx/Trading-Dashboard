@@ -1,95 +1,166 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Dashboard</title>
-    Linking to the external CSS file 
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>Trading Dashboard</h1>
-    </header>
-    <div class="container">
-        <div class="sidebar">
-            <h3>Client Accounts</h3>
-            <input type="checkbox" id="select-all" onclick="toggleSelectAll()"> Select All<br>
-            <div class="filter-broker">
-                <label for="broker-filter-sidebar">Broker:</label>
-                <select id="broker-filter-sidebar" onchange="filterClients()">
-                    <option value="all">All</option>
-                    <option value="Zerodha">Zerodha</option>
-                    <option value="XTS">XTS</option>
-                </select>
-            </div>
-            <div id="client-accounts">
-                <input type="checkbox" class="client-id" data-broker="Zerodha"> Client 1 (Zerodha)<br>
-                <input type="checkbox" class="client-id" data-broker="XTS"> Client 2 (XTS)<br>
-                <input type="checkbox" class="client-id" data-broker="Zerodha"> Client 3 (Zerodha)<br>
-                <input type="checkbox" class="client-id" data-broker="XTS"> Client 4 (XTS)<br>
-            </div>
-            <button class="square-off-btn">Square Off</button>
-        </div>
-        <div class="content">
-            <div class="tabs">
-                <button class="tab active" onclick="showTabContent('dashboard')">Dashboard</button>
-                <button class="tab" onclick="showTabContent('orders')">Orders</button>
-                <button class="tab" onclick="showTabContent('positions')">Positions</button>
-            </div>
-            <div id="dashboard" class="tab-content active">
-                <h3>Dashboard</h3>
-                <div class="balance">
-                    <span>Equity</span><br>
-                    Available Balance: <span class="positive">10.36L</span><br>
-                    Margin Used: <span class="negative">-274.35</span><br>
-                    Account Value: <span class="positive">10.35L</span>
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Trading Dashboard</title>
+     <link rel="stylesheet" href="styles.css">
+ </head>
+ <body>
+     <header>
+         <h1>Trading Dashboard</h1>
+         <div class="user-menu">
+             <div class="user-icon" onclick="toggleUserMenu()" id="user-icon">
+                 <span class="user-initials">U</span> <!-- Placeholder, updated with JavaScript -->
+             </div>
+             <div class="user-dropdown" id="userDropdown">
+                 <p class="user-name" id="user-name">User</p> <!-- Placeholder, updated with JavaScript -->
+                 <button class="logout-btn" onclick="logout()">Logout</button>
+             </div>
+         </div>
+     </header>
+     <div class="container">
+         <aside class="sidebar">
+             <h3>Client Accounts</h3>
+             <label>
+                 <input type="checkbox" id="select-all" onclick="toggleSelectAll()"> Select All
+             </label>
+             <div class="filter-broker">
+                 <label for="broker-filter-sidebar">Filter by Broker:</label>
+                 <select id="broker-filter-sidebar" onchange="filterClients()">
+                     <option value="all">All</option>
+                     <option value="Zerodha">Zerodha</option>
+                     <option value="XTS">XTS</option>
+                 </select>
+             </div>
+             <div id="client-accounts" class="client-accounts">
+                 <div class="client-account" data-broker="Zerodha">
+                     <label>
+                         <input type="checkbox" class="client-id"> VMC321 (Zerodha)
+                     </label>
+                 </div>
+                 <div class="client-account" data-broker="XTS">
+                     <label>
+                         <input type="checkbox" class="client-id"> SVG342 (XTS)
+                     </label>
+                 </div>
+                 <div class="client-account" data-broker="Zerodha">
+                     <label>
+                         <input type="checkbox" class="client-id"> SDE352 (Zerodha)
+                     </label>
+                 </div>
+                 <div class="client-account" data-broker="XTS">
+                     <label>
+                         <input type="checkbox" class="client-id"> DGT536 (XTS)
+                     </label>
+                 </div>
+             </div>
+             <button class="square-off-btn">Square Off</button>
+         </aside>
+         <main class="content">
+             <nav class="tabs">
+                 <button class="tab active" onclick="showTabContent('dashboard')">Dashboard</button>
+                 <button class="tab" onclick="showTabContent('orders')">Orders</button>
+                 <button class="tab" onclick="showTabContent('positions')">Positions</button>
+             </nav>
+             <section id="dashboard" class="tab-content active">
+                 <h3>Dashboard</h3>
+                 <div class="balance">
+                     <p><strong>Equity</strong></p>
+                     <p>Available Balance: <span class="positive">10.36L</span></p>
+                     <p>Margin Used: <span class="negative">-274.35</span></p>
+                     <p>Account Value: <span class="positive">10.35L</span></p>
+                 </div>
+             </section>
+             <section id="orders" class="tab-content">
+                 <h3>Executed Orders</h3>
+                 <div class="order-section">
+                     <h4>Triggered Pending Orders</h4>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Client ID</th>
+                                 <th>Broker</th>
+                                 <th>Type</th>
+                                 <th>Instrument</th>
+                                 <th>Status</th>
+                             </tr>
+                         </thead>
+                         <tbody id="pending-orders"></tbody>
+                     </table>
+                 </div>
+                 <div class="order-section">
+                     <h4>Canceled Orders</h4>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Client ID</th>
+                                 <th>Broker</th>
+                                 <th>Type</th>
+                                 <th>Instrument</th>
+                                 <th>Status</th>
+                             </tr>
+                         </thead>
+                         <tbody id="canceled-orders"></tbody>
+                     </table>
+                 </div>
+                 <div class="order-section">
+                     <h4>Completed Orders</h4>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Client ID</th>
+                                 <th>Broker</th>
+                                 <th>Type</th>
+                                 <th>Instrument</th>
+                                 <th>Status</th>
+                             </tr>
+                         </thead>
+                         <tbody id="completed-orders"></tbody>
+                     </table>
+                 </div>
+                 <div class="order-section">
+                     <h4>Rejected Orders</h4>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Client ID</th>
+                                 <th>Broker</th>
+                                 <th>Type</th>
+                                 <th>Instrument</th>
+                                 <th>Status</th>
+                             </tr>
+                         </thead>
+                         <tbody id="rejected-orders"></tbody>
+                     </table>
+                 </div>
+                 <!-- <div class="order-section">
+                     <h4>Current Running Orders</h4>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>Client ID</th>
+                                 <th>Broker</th>
+                                 <th>Type</th>
+                                 <th>Instrument</th>
+                                 <th>Status</th>
+                             </tr>
+                         </thead>
+                         <tbody id="running-orders"></tbody>
+                     </table>
+                 </div> -->
+             </section>
+             <section id="positions" class="tab-content">
+                 <h3>Positions</h3>
+                 <div class="filter-positions">
+                    <label for="positions-filter">Filter by:</label>
+                    <select id="positions-filter" onchange="filterPositions()">
+                        <option value="all">All</option>
+                        <option value="NIFTY">NIFTY</option>
+                        <option value="SENSEX">SENSEX</option>
+                        <option value="BANKNIFTY">BANK NIFTY</option>
+                    </select>
                 </div>
-            </div>
-            <div id="orders" class="tab-content">
-                <h3>Executed Orders</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Client ID</th>
-                            <th>Broker</th>
-                            <th>Time</th>
-                            <th>Type</th>
-                            <th>Instrument</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Avg Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Client 1</td>
-                            <td>Zerodha</td>
-                            <td>12:52:46</td>
-                            <td class="buy">BUY</td>
-                            <td>HINDUNILVR</td>
-                            <td>MIS</td>
-                            <td>10 / 10</td>
-                            <td>2647.75</td>
-                            <td class="complete">COMPLETE</td>
-                        </tr>
-                        <tr>
-                            <td>Client 2</td>
-                            <td>XTS</td>
-                            <td>12:04:53</td>
-                            <td class="sell">SELL</td>
-                            <td>HINDUNILVR</td>
-                            <td>MIS</td>
-                            <td>10 / 10</td>
-                            <td>2658.00</td>
-                            <td class="complete">COMPLETE</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="positions" class="tab-content">
-                <h3>Positions</h3>
                 <table>
                     <thead>
                         <tr>
@@ -103,156 +174,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="position-row" data-category="NIFTY">
                             <td>MIS</td>
-                            <td>HINDUNILVR</td>
+                            <td>NIFTY 21000 CE</td>
                             <td class="negative">-10</td>
                             <td>2658.00</td>
                             <td>2655.00</td>
                             <td class="positive">+30.00</td>
                             <td class="negative">-0.11%</td>
                         </tr>
+                        <tr class="position-row" data-category="NIFTY">
+                            <td>MIS</td>
+                            <td>NIFTY 21000 PE</td>
+                            <td class="negative">10</td>
+                            <td>2658.00</td>
+                            <td>2655.00</td>
+                            <td class="positive">+30.00</td>
+                            <td class="negative">0.11%</td>
+                        </tr>
+                        <tr class="position-row" data-category="SENSEX">
+                            <td>MIS</td>
+                            <td>SENSEX 50000 CE</td>
+                            <td class="negative">-5</td>
+                            <td>1540.00</td>
+                            <td>1535.00</td>
+                            <td class="positive">+25.00</td>
+                            <td class="negative">-0.32%</td>
+                        </tr>
+                        <tr class="position-row" data-category="BANKNIFTY">
+                            <td>MIS</td>
+                            <td>BANK NIFTY 40000 CE</td>
+                            <td class="negative">15</td>
+                            <td>3520.00</td>
+                            <td>3500.00</td>
+                            <td class="negative">-300.00</td>
+                            <td class="negative">-0.85%</td>
+                        </tr>
                     </tbody>
                 </table>
-                <button class="exit-btn">Exit 1 Position</button>
-            </div>
-        </div>
+                <button class="exit-btn">Exit Position</button>
+            </section>
+        </main>
     </div>
-    Linking to the external JavaScript file 
     <script src="script.js"></script>
 </body>
 </html> 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Dashboard</title>
-    <!-- Linking to the external CSS file -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>Trading Dashboard</h1>
-    </header>
-    <div class="container">
-        <div class="sidebar">
-            <h3>Client Accounts</h3>
-            <input type="checkbox" id="select-all" onclick="toggleSelectAll()"> Select All<br>
-            <div class="filter-broker">
-                <label for="broker-filter-sidebar">Broker:</label>
-                <select id="broker-filter-sidebar" onchange="filterClients()">
-                    <option value="all">All</option>
-                    <option value="Zerodha">Zerodha</option>
-                    <option value="XTS">XTS</option>
-                </select>
-            </div>
-            <div id="client-accounts">
-                <div class="client-account" data-broker="Zerodha">
-                    <input type="checkbox" class="client-id"> Client 1 (Zerodha)
-                </div>
-                <div class="client-account" data-broker="XTS">
-                    <input type="checkbox" class="client-id"> Client 2 (XTS)
-                </div>
-                <div class="client-account" data-broker="Zerodha">
-                    <input type="checkbox" class="client-id"> Client 3 (Zerodha)
-                </div>
-                <div class="client-account" data-broker="XTS">
-                    <input type="checkbox" class="client-id"> Client 4 (XTS)
-                </div>
-            </div>
-            <button class="square-off-btn">Square Off</button>
-        </div>
-        <div class="content">
-            <div class="tabs">
-                <button class="tab active" onclick="showTabContent('dashboard')">Dashboard</button>
-                <button class="tab" onclick="showTabContent('orders')">Orders</button>
-                <button class="tab" onclick="showTabContent('positions')">Positions</button>
-            </div>
-            <div id="dashboard" class="tab-content active">
-                <h3>Dashboard</h3>
-                <div class="balance">
-                    <span>Equity</span><br>
-                    Available Balance: <span class="positive">10.36L</span><br>
-                    Margin Used: <span class="negative">-274.35</span><br>
-                    Account Value: <span class="positive">10.35L</span>
-                </div>
-            </div>
-            <div id="orders" class="tab-content">
-                <h3>Executed Orders</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Client ID</th>
-                            <th>Broker</th>
-                            <th>Time</th>
-                            <th>Type</th>
-                            <th>Instrument</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Avg Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Client 1</td>
-                            <td>Zerodha</td>
-                            <td>12:52:46</td>
-                            <td class="buy">BUY</td>
-                            <td>HINDUNILVR</td>
-                            <td>MIS</td>
-                            <td>10 / 10</td>
-                            <td>2647.75</td>
-                            <td class="complete">COMPLETE</td>
-                        </tr>
-                        <tr>
-                            <td>Client 2</td>
-                            <td>XTS</td>
-                            <td>12:04:53</td>
-                            <td class="sell">SELL</td>
-                            <td>HINDUNILVR</td>
-                            <td>MIS</td>
-                            <td>10 / 10</td>
-                            <td>2658.00</td>
-                            <td class="complete">COMPLETE</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="positions" class="tab-content">
-                <h3>Positions</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Instrument</th>
-                            <th>Qty</th>
-                            <th>Avg.</th>
-                            <th>LTP</th>
-                            <th>P&L</th>
-                            <th>Chg.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>MIS</td>
-                            <td>HINDUNILVR</td>
-                            <td class="negative">-10</td>
-                            <td>2658.00</td>
-                            <td>2655.00</td>
-                            <td class="positive">+30.00</td>
-                            <td class="negative">-0.11%</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="exit-btn">Exit 1 Position</button>
-            </div>
-        </div>
-    </div>
-    <!-- Linking to the external JavaScript file -->
-    <script src="script.js"></script>
-</body>
-</html>
